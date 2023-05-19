@@ -10,6 +10,7 @@ import { ROUTES } from "./navigation-routes";
 import { useTheme } from "react-native-magnus";
 import { Pressable } from "react-native";
 import { getTabColorConfig } from "../constants";
+import { AddClient } from "../screens/add-client";
 
 const Tab = createBottomTabNavigator();
 
@@ -67,6 +68,28 @@ export const BottomTabs = () => {
             tabBarActiveTintColor: tabColorConfig.upsell,
             headerStyle: {
               backgroundColor: tabColorConfig.upsell,
+              borderBottomLeftRadius: 48,
+            },
+            headerTintColor: "white",
+            headerTitleAlign: "center",
+          }}
+        ></Tab.Screen>
+        <Tab.Screen
+          name={ROUTES.TABS.ADD_CLIENT}
+          component={AddClient}
+          options={{
+            tabBarIcon: ({ focused, size }) => (
+              <FontAwesome
+                name="handshake-o"
+                size={size}
+                color={
+                  focused ? tabColorConfig.addClient : tabColorConfig.default
+                }
+              />
+            ),
+            tabBarActiveTintColor: tabColorConfig.addClient,
+            headerStyle: {
+              backgroundColor: tabColorConfig.addClient,
               borderBottomLeftRadius: 48,
             },
             headerTintColor: "white",

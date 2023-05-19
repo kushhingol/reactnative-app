@@ -14,7 +14,7 @@ export const Upsell = () => {
       icon={<FontAwesome name="rupee" size={36} />}
       title="Add Sale"
     >
-      <UpsellForm />
+      <UpsellForm buttonColor={tabColorConfig.upsell ?? ""} />
     </ScreenPage>
   );
 };
