@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
 import { useTheme } from "react-native-magnus";
+import { AntDesign } from "@expo/vector-icons";
 import { getTabColorConfig } from "../../constants";
 import { ScreenPage } from "../../components/screen-page";
-import { AntDesign } from "@expo/vector-icons";
-import React from "react";
 
 export const Dashboard = () => {
   const { theme } = useTheme();

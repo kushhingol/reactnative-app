@@ -1,20 +1,79 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 
-interface IParams {
-  [key: string]: string | number;
-}
+type FormControlConfiguration = {
+  value: string | number;
+  required?: boolean;
+  validator?: (value: string | number) => string;
+  error?: string;
+};
 
-export const useForm = (values: IParams) => {
+type FormSeedValuesType = {
+  [key: keyof IParams]: string | number;
+};
+
+type IParams = {
+  [key: string]: FormControlConfiguration;
+};
+
+export const useForm = (formConfiguration: IParams) => {
   const [formValues, setFormValues] = useState({
-    ...values,
+    ...formConfiguration,
   });
 
   const handleFormValueChange = (key: string, value: any) => {
+    let errorString = "";
+    const validator = formValues?.[key]?.validator;
+    if (validator) {
+      errorString = validator(value);
+      23;
+    }
     setFormValues({
       ...formValues,
-      [key]: value,
+      [key]: {
+        ...formValues[key],
+        value: value,
+        error: errorString,
+      },
     });
   };
 
-  return { formValues, handleFormValueChange, setFormValues };
+  const isFormComplete = useMemo(() => {
+    const requiredFields = Object.values(formValues).filter(
+      (formFieldConfig) => formFieldConfig.required
+    );
+    const requiredFieldsHasValue = requiredFields.filter(
+      (formField) => formField.value && !formField.error
+    );
+    return requiredFieldsHasValue.length == requiredFields.length;
+  }, [formValues]);
+
+  const seedValues = useCallback((seedFormValuesObj: FormSeedValuesType) => {
+    let formValuesState = { ...formValues };
+    Object.keys(seedFormValuesObj).forEach((formKey) => {
+      formValuesState = {
+        ...formValuesState,
+        [formKey]: {
+          ...formValuesState[formKey],
+          value: seedFormValuesObj[formKey].valueOf(),
+        },
+      };
+    });
+    setFormValues(formValuesState);
+  }, []);
+
+  const getFormFieldsError = useCallback(
+    (formKey: keyof IParams) => {
+      return formValues?.[formKey]?.error ?? "";
+    },
+    [formValues]
+  );
+
+  return {
+    formValues,
+    handleFormValueChange,
+    setFormValues,
+    seedValues,
+    isFormComplete,
+    getFormFieldsError,
+  };
 };
