@@ -1,8 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 
-import { CustomStatusBar } from "./custom-status-bar";
-
 interface IProps {
   title: string;
   icon: React.ReactNode;
@@ -23,7 +21,11 @@ export const ScreenPage = ({ title, icon, color, children }: IProps) => {
           {icon}
           <Text style={styles.pageHeading}>{title}</Text>
         </View>
-        <ScrollView style={styles.scrollView} automaticallyAdjustKeyboardInsets>
+        <ScrollView
+          nestedScrollEnabled={true}
+          style={styles.scrollView}
+          automaticallyAdjustKeyboardInsets
+        >
           {children}
         </ScrollView>
       </View>
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     elevation: 0,
     flex: 1,
-    borderTopRightRadius: 48,
+    // borderTopRightRadius: 48,
   },
   pageHeadingContainer: {
     flexDirection: "row",
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   scrollView: {
-    paddingLeft: 24,
-    paddingRight: 24,
+    marginLeft: 24,
+    marginRight: 24,
   },
 });

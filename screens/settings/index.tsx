@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { useTheme } from "react-native-magnus";
 import { getTabColorConfig } from "../../constants";
-import { ScreenPage } from "../../components/screen-page";
+import { ScreenPage } from "../../components/shared/screen-page";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -12,9 +12,11 @@ export const Settings = () => {
     <ScreenPage
       color={tabColorConfig.settings ?? ""}
       icon={<Ionicons name="settings" size={36} />}
-      title="Add Sale"
+      title="Settings"
     >
-      {/* <Text>Coming soon...</Text> */}
+      <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+        <Text>Coming soon...</Text>
+      </View>
     </ScreenPage>
   );
 };

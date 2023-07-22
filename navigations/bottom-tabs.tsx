@@ -1,14 +1,13 @@
 import React from "react";
+import { useTheme } from "react-native-magnus";
+import { Pressable } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
 import { Dashboard } from "../screens/dashboard";
 import { Upsell } from "../screens/upsell";
 import { SearchCustomer } from "../screens/search-customer";
 import { Settings } from "../screens/settings";
-
 import { ROUTES } from "./navigation-routes";
-import { useTheme } from "react-native-magnus";
-import { Pressable } from "react-native";
 import { getTabColorConfig } from "../constants";
 import { AddClient } from "../screens/add-client";
 
@@ -49,6 +48,7 @@ export const BottomTabs = () => {
             headerStyle: {
               backgroundColor: tabColorConfig.home,
               borderBottomLeftRadius: 48,
+              borderBottomRightRadius: 48,
             },
             headerTintColor: "white",
             headerTitleAlign: "center",
@@ -69,6 +69,7 @@ export const BottomTabs = () => {
             headerStyle: {
               backgroundColor: tabColorConfig.upsell,
               borderBottomLeftRadius: 48,
+              borderBottomRightRadius: 48,
             },
             headerTintColor: "white",
             headerTitleAlign: "center",
@@ -91,6 +92,7 @@ export const BottomTabs = () => {
             headerStyle: {
               backgroundColor: tabColorConfig.addClient,
               borderBottomLeftRadius: 48,
+              borderBottomRightRadius: 48,
             },
             headerTintColor: "white",
             headerTitleAlign: "center",
@@ -111,6 +113,7 @@ export const BottomTabs = () => {
             headerStyle: {
               backgroundColor: tabColorConfig.search,
               borderBottomLeftRadius: 48,
+              borderBottomRightRadius: 48,
             },
             headerTintColor: "white",
             headerTitleAlign: "center",
@@ -133,6 +136,7 @@ export const BottomTabs = () => {
             headerStyle: {
               backgroundColor: tabColorConfig.settings,
               borderBottomLeftRadius: 48,
+              borderBottomRightRadius: 48,
             },
             headerTintColor: "white",
             headerTitleAlign: "center",

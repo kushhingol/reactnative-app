@@ -2,7 +2,7 @@ import React from "react";
 import { useTheme } from "react-native-magnus";
 import { FontAwesome } from "@expo/vector-icons";
 import { getTabColorConfig } from "../../constants";
-import { ScreenPage } from "../../components/screen-page";
+import { ScreenPage } from "../../components/shared/screen-page";
 import { AddClientForm } from "./add-client-form";
 
 export const AddClient = () => {

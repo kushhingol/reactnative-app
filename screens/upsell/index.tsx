@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useTheme } from "react-native-magnus";
 import { getTabColorConfig } from "../../constants";
-import { ScreenPage } from "../../components/screen-page";
+import { ScreenPage } from "../../components/shared/screen-page";
 import { UpsellForm } from "./upsell-form";
 
 export const Upsell = () => {

@@ -20,7 +20,7 @@ export const useUpsellForm = () => {
       required: true,
       validator: (value) => {
         const isValidEmail = validateEmailAddress(value.toString());
-        return value && !isValidEmail ? "Please enter valid phone number" : "";
+        return value && !isValidEmail ? "Please enter email address" : "";
       },
     },
     address1: {
@@ -48,11 +48,9 @@ export const useUpsellForm = () => {
     },
     serialNumber: {
       value: "",
-      required: true,
     },
     quotedPrice: {
       value: "",
-      required: true,
     },
     sellingPrice: {
       value: "",

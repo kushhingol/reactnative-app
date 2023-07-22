@@ -1,13 +1,8 @@
 import React from "react";
 import { Input, InputProps, Div, Text } from "react-native-magnus";
+import { InputFieldProps } from "./types";
 
-interface IProps extends InputProps {
-  formKey: string;
-  handleFormValueChange: (key: string, value: any) => void;
-  error?: string;
-}
-
-export const FormField = (props: IProps) => {
+export const FormField = (props: InputFieldProps) => {
   return (
     <>
       <Input

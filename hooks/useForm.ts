@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback } from "react";
 
 type FormControlConfiguration = {
-  value: string | number;
+  value: string | number | null;
   required?: boolean;
   validator?: (value: string | number) => string;
   error?: string;
@@ -15,22 +15,26 @@ type IParams = {
   [key: string]: FormControlConfiguration;
 };
 
+type FormValues = {
+  [key: keyof IParams]: string;
+};
+
 export const useForm = (formConfiguration: IParams) => {
-  const [formValues, setFormValues] = useState({
+  const [formConfigurationObj, setFormConfigurationObj] = useState({
     ...formConfiguration,
   });
 
   const handleFormValueChange = (key: string, value: any) => {
     let errorString = "";
-    const validator = formValues?.[key]?.validator;
+    const validator = formConfigurationObj?.[key]?.validator;
     if (validator) {
       errorString = validator(value);
       23;
     }
-    setFormValues({
-      ...formValues,
+    setFormConfigurationObj({
+      ...formConfigurationObj,
       [key]: {
-        ...formValues[key],
+        ...formConfigurationObj[key],
         value: value,
         error: errorString,
       },
@@ -38,40 +42,63 @@ export const useForm = (formConfiguration: IParams) => {
   };
 
   const isFormComplete = useMemo(() => {
-    const requiredFields = Object.values(formValues).filter(
+    const requiredFields = Object.values(formConfigurationObj).filter(
       (formFieldConfig) => formFieldConfig.required
     );
     const requiredFieldsHasValue = requiredFields.filter(
       (formField) => formField.value && !formField.error
     );
     return requiredFieldsHasValue.length == requiredFields.length;
-  }, [formValues]);
+  }, [formConfigurationObj]);
 
   const seedValues = useCallback((seedFormValuesObj: FormSeedValuesType) => {
-    let formValuesState = { ...formValues };
+    let formValuesState = { ...formConfigurationObj };
     Object.keys(seedFormValuesObj).forEach((formKey) => {
       formValuesState = {
         ...formValuesState,
         [formKey]: {
           ...formValuesState[formKey],
-          value: seedFormValuesObj[formKey].valueOf(),
+          value:
+            seedFormValuesObj[formKey].valueOf() ?? formValuesState[formKey],
         },
       };
     });
-    setFormValues(formValuesState);
+    setFormConfigurationObj(formValuesState);
+  }, []);
+
+  const reset = useCallback(() => {
+    const resetForm: IParams = {};
+    for (let key in formConfigurationObj) {
+      const obj = formConfigurationObj[key];
+      obj.value = null;
+      resetForm[key] = obj;
+    }
+    setFormConfigurationObj(resetForm);
   }, []);
 
   const getFormFieldsError = useCallback(
     (formKey: keyof IParams) => {
-      return formValues?.[formKey]?.error ?? "";
+      return formConfigurationObj?.[formKey]?.error ?? "";
     },
-    [formValues]
+    [formConfigurationObj]
   );
 
+  const formValues = useMemo(() => {
+    let formValuesObj: FormValues = {};
+    Object.keys(formConfigurationObj).forEach((formKey) => {
+      formValuesObj = {
+        ...formValuesObj,
+        [formKey]: formConfigurationObj[formKey].value?.toString() ?? "",
+      };
+    });
+    return formValuesObj;
+  }, [formConfigurationObj]);
+
   return {
+    reset,
     formValues,
     handleFormValueChange,
-    setFormValues,
+    setFormConfigurationObj,
     seedValues,
     isFormComplete,
     getFormFieldsError,
